@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "MyAnimInstance.h"
+#include "iostream"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
