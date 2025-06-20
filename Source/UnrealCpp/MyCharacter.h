@@ -13,7 +13,7 @@ class UNREALCPP_API AMyCharacter : public ACharacter
 
 private:
 	UPROPERTY(VisibleAnywhere);
-	class UAnimInstance* AnimInstacne;
+	class UMyAnimInstance* AnimInstance;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* CameraBoom;

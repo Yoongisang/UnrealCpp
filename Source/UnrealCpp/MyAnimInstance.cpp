@@ -5,6 +5,16 @@
 #include "MyCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+UMyAnimInstance::UMyAnimInstance()
+{
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> AM(TEXT("/Script/Engine.AnimMontage'/Game/ParagonGreystone/Characters/Heroes/Greystone/Animations/Attack_PrimaryA_Montage.Attack_PrimaryA_Montage'"));
+
+	if (AM.Succeeded())
+	{
+		AttackMontage = AM.Object;
+	}
+}
+
 void UMyAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
@@ -52,7 +62,20 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			ShouldMove = false;
 		}
 		
-	
+		IsFalling = CharacterMovement->IsFalling();
 	}
 	
+}
+
+void UMyAnimInstance::PlayAttackMontage()
+{
+	if (IsValid(AttackMontage))
+	{
+		if (!Montage_IsPlaying(AttackMontage))
+		{
+			Montage_Play(AttackMontage);
+		}
+
+	}
+
 }

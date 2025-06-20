@@ -5,7 +5,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "MyAnimInstance.h"
-#include "iostream"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -34,7 +33,7 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AnimInstacne = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 // Called every frame
@@ -74,7 +73,10 @@ void AMyCharacter::KeyLeftright(float value)
 
 void AMyCharacter::KeyAttack()
 {
-	UE_LOG(LogTemp, Log, TEXT("Attack"));
+	if (IsValid(AnimInstance))
+	{
+		AnimInstance->PlayAttackMontage();
+	}
 }
 
 void AMyCharacter::LookLeftRight(float value)
