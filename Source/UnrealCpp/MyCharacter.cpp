@@ -52,6 +52,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("ForwardBackward"), this, &AMyCharacter::KeyUpdown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AMyCharacter::KeyLeftright);
 
+	PlayerInputComponent->BindAxis(TEXT("LookLeftRight"), this, &AMyCharacter::LookLeftRight);
+	PlayerInputComponent->BindAxis(TEXT("LookUpdown"), this, &AMyCharacter::LookUpdown);
+
 	PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed, this, &AMyCharacter::KeyAttack);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AMyCharacter::Jump);
 
@@ -72,5 +75,15 @@ void AMyCharacter::KeyLeftright(float value)
 void AMyCharacter::KeyAttack()
 {
 	UE_LOG(LogTemp, Log, TEXT("Attack"));
+}
+
+void AMyCharacter::LookLeftRight(float value)
+{
+	AddControllerYawInput(value);
+}
+
+void AMyCharacter::LookUpdown(float value)
+{
+	AddControllerPitchInput(-value);
 }
 

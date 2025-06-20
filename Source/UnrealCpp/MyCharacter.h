@@ -38,4 +38,6 @@ public:
 	void KeyUpdown(float value);
 	void KeyLeftright(float value);
 	void KeyAttack();
+	void LookLeftRight(float value);
+	void LookUpdown(float value);
 };

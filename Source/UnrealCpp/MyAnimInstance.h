@@ -13,10 +13,19 @@ UCLASS()
 class UNREALCPP_API UMyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-	
+public:
+
 private:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	bool ShouldMove;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	FVector Velocity;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float Horizontal;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float Vertical;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float GroundSpeed;
 public:
 	UPROPERTY(VisibleAnywhere)
 	class AMyCharacter* MyCharacter;
@@ -26,5 +35,6 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
 
 };
