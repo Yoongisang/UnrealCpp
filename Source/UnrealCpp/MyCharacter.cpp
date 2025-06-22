@@ -89,3 +89,26 @@ void AMyCharacter::LookUpdown(float value)
 	AddControllerPitchInput(-value);
 }
 
+void AMyCharacter::PlayerAttack()
+{
+	FHitResult HitResult;
+	FCollisionQueryParams Params(NAME_None, false, this);
+
+	float AttackRange = 100.f;
+	float AttackRadius = 50.f;
+
+	bool Result = GetWorld()->SweepSingleByChannel(OUT HitResult,
+		GetActorLocation(), GetActorLocation() + GetActorForwardVector() * AttackRange,
+		FQuat::Identity,
+		ECollisionChannel::ECC_GameTraceChannel2,
+		FCollisionShape::MakeSphere(AttackRange),
+		Params);
+
+
+	if (Result)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Ãæµ¹"));
+	}
+	
+}
+

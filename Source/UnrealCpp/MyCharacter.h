@@ -40,4 +40,7 @@ public:
 	void KeyAttack();
 	void LookLeftRight(float value);
 	void LookUpdown(float value);
+
+	void PlayerAttack();
+
 };
