@@ -13,6 +13,9 @@ class UNREALCPP_API AMyCharacter : public ACharacter
 
 private:
 	UPROPERTY(VisibleAnywhere);
+	class USkeletalMesh* SkeletalMesh;
+
+	UPROPERTY(VisibleAnywhere);
 	class UMyAnimInstance* AnimInstance;
 
 	UPROPERTY(VisibleAnywhere)

@@ -7,12 +7,12 @@
 AMyGameModeBase::AMyGameModeBase()
 {
 	
-	static ConstructorHelpers::FClassFinder<AMyCharacter> BP_Player(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_MyCharacter.BP_MyCharacter_C'"));
+	//static ConstructorHelpers::FClassFinder<AMyCharacter> BP_Player(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_Player.BP_Player_C'"));
 	
 	
-	if (BP_Player.Succeeded())
+	if (IsValid(DefaultPawn))
 	{
-		DefaultPawnClass = BP_Player.Class;
+		DefaultPawnClass = GetClass()->GetOwnerClass();
 	
 	}
 

@@ -13,8 +13,6 @@ UCLASS()
 class UNREALCPP_API UMyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-public:
-
 private:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	bool ShouldMove;
@@ -42,6 +40,8 @@ public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 public:
-	void PlayAttackMontage(); // 외부에서 Montage 플레이 
-
+	void PlayAttackMontage(); 
+public:
+	UFUNCTION()
+	void AnimNotify_Hit();
 };
