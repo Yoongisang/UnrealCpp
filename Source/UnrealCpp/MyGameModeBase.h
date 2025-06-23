@@ -13,11 +13,6 @@ UCLASS()
 class UNREALCPP_API AMyGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-private:
-	UPROPERTY(VisibleAnywhere);
-	class AMyCharacter* DefaultPawn;
-
 public:
 	AMyGameModeBase();
-
 };

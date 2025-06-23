@@ -11,14 +11,13 @@ AMyCharacter::AMyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	//static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 
-	//if (SM.Succeeded())
-	if (IsValid(SkeletalMesh))
+	
+	if (SM.Succeeded())
 	{
 
-		//GetMesh()->SetSkeletalMesh(SM.Object);
-		GetMesh()->SetSkeletalMesh(SkeletalMesh);
+		GetMesh()->SetSkeletalMesh(SM.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, -90.f, 0.f));
 	}
 
