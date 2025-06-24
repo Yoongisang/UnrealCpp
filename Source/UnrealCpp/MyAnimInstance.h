@@ -35,6 +35,7 @@ public:
 	//UPROPERTY(VisibleAnywhere)
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage; // UAnimMontage ∆˜¿Œ≈Õ
+
 public:
 	UMyAnimInstance();
 	virtual void NativeInitializeAnimation() override;

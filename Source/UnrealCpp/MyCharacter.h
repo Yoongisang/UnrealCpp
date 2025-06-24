@@ -12,7 +12,7 @@ class UNREALCPP_API AMyCharacter : public ACharacter
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(VisibleAnywhere);
+	UPROPERTY(VisibleAnywhere)
 	class UMyAnimInstance* AnimInstance;
 
 	UPROPERTY(VisibleAnywhere)
