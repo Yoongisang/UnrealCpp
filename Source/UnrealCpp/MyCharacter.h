@@ -20,6 +20,28 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* FollowCamera;
 
+	/** MappingContext */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputMappingContext* DefaultMappingContext;
+
+	/** Jump Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* JumpAction;
+
+	/** Move Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* MoveAction;
+
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* LookAction;
+
+	/** Look Fire Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* FireAction;
+
+
+
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -35,11 +57,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void KeyUpdown(float value);
-	void KeyLeftright(float value);
-	void KeyAttack();
-	void LookLeftRight(float value);
-	void LookUpdown(float value);
+
+
+	/** Called for movement input */
+	void Move(const struct FInputActionValue& Value);
+
+	/** Called for looking input */
+	void Look(const struct FInputActionValue& Value);
+
+	void Fire(const FInputActionValue& Value);
 
 	void PlayerAttack();
 

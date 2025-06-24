@@ -4,14 +4,19 @@
 #include "MyAnimInstance.h"
 #include "MyCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Animation/AnimMontage.h"
 
 UMyAnimInstance::UMyAnimInstance()
 {
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> AM(TEXT("/Script/Engine.AnimMontage'/Game/ParagonGreystone/Characters/Heroes/Greystone/Animations/Attack_PrimaryA_Montage.Attack_PrimaryA_Montage'"));
-
-	if (AM.Succeeded())
+	//static ConstructorHelpers::FObjectFinder<UAnimMontage> AM(TEXT("/Script/Engine.AnimMontage'/Game/ParagonSparrow/Characters/Heroes/Sparrow/Animations/Primary_Fire_Med_Montage.Primary_Fire_Med_Montage'"));
+	//
+	//if (AM.Succeeded())
+	//{
+	//	AttackMontage = AM.Object;
+	//}
+	if (IsValid(AttackMontage))
 	{
-		AttackMontage = AM.Object;
+		Montage_Play(AttackMontage);
 	}
 }
 
@@ -77,7 +82,10 @@ void UMyAnimInstance::PlayAttackMontage()
 		}
 
 	}
-
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("Error"));
+	}
 }
 
 void UMyAnimInstance::AnimNotify_Hit()

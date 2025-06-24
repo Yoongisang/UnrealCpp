@@ -32,7 +32,8 @@ public:
 	class AMyCharacter* MyCharacter;
 	UPROPERTY(VisibleAnywhere)
 	class UCharacterMovementComponent* CharacterMovement;
-	UPROPERTY(VisibleAnywhere)
+	//UPROPERTY(VisibleAnywhere)
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage; // UAnimMontage ∆˜¿Œ≈Õ
 public:
 	UMyAnimInstance();
