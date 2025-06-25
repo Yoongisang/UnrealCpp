@@ -7,6 +7,7 @@
 #include "MyAnimInstance.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Arrow.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -19,13 +20,17 @@ AMyCharacter::AMyCharacter()
 	//
 	//	GetMesh()->SetSkeletalMesh(SM.Object);
 	//	GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, -90.f, 0.f));
-	//}S
+	//}
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	
 	CameraBoom->SetupAttachment(RootComponent);
 	FollowCamera->SetupAttachment(CameraBoom);
 	CameraBoom->TargetArmLength = 400.0f;
+	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoom->SocketOffset = FVector(0.f, 120.f, 75.f); // ¼öÁ¤
+	
+
 }
 
 // Called when the game starts or when spawned
@@ -117,6 +122,13 @@ void AMyCharacter::Fire(const FInputActionValue& Value)
 	if (IsValid(AnimInstance))
 	{
 		AnimInstance->PlayAttackMontage();
+		FActorSpawnParameters params;
+		params.Owner = this;
+
+		auto MyArrow = GetWorld()->SpawnActor<AArrow>(GetActorLocation(), GetActorRotation(), params);
+
+
+
 	}
 }
 

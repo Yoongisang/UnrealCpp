@@ -5,6 +5,8 @@
 #include "MyCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimMontage.h"
+#include "kismet/kismetMathLibrary.h"
+
 
 UMyAnimInstance::UMyAnimInstance()
 {
@@ -68,6 +70,16 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 		
 		IsFalling = CharacterMovement->IsFalling();
+		
+		AimRotation = MyCharacter->GetBaseAimRotation();
+		FRotator RotFromX = UKismetMathLibrary::MakeRotFromX(Velocity);
+
+		FRotator DeltaRotation = AimRotation - RotFromX;
+		DeltaRotation.Normalize();
+
+		YawOffset = DeltaRotation.Yaw;
+	
+
 	}
 	
 }

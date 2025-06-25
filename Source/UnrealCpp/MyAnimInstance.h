@@ -27,6 +27,11 @@ private:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float GroundSpeed;
 
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float YawOffset;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	FRotator AimRotation;
+
 public:
 	UPROPERTY(VisibleAnywhere)
 	class AMyCharacter* MyCharacter;
