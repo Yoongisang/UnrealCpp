@@ -82,7 +82,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::Move(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Log, TEXT("Move"));
+	
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
@@ -105,7 +105,7 @@ void AMyCharacter::Move(const FInputActionValue& Value)
 
 void AMyCharacter::Look(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Log, TEXT("Look"));
+	
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
@@ -122,10 +122,13 @@ void AMyCharacter::Fire(const FInputActionValue& Value)
 	if (IsValid(AnimInstance))
 	{
 		AnimInstance->PlayAttackMontage();
+		FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("ArrowSocket"));
+		FVector SocketLocation = SocketTransform.GetLocation();
+		FRotator SocketRotation = SocketTransform.GetRotation().Rotator();
 		FActorSpawnParameters params;
 		params.Owner = this;
 
-		auto MyArrow = GetWorld()->SpawnActor<AArrow>(GetActorLocation(), GetActorRotation(), params);
+		auto MyArrow = GetWorld()->SpawnActor<AArrow>(SocketLocation, SocketRotation, params);
 
 
 
@@ -174,11 +177,7 @@ void AMyCharacter::PlayerAttack()
 
 	DrawDebugCapsule(GetWorld(), Center, HalfHeight, AttackRadius, Rotation, DrawColor, false, 2.f);
 
-	if (Result && HitResult.GetActor())
-	{
-		UE_LOG(LogTemp, Log, TEXT("Hit : %s"), *HitResult.GetActor()->GetName());
-
-	}
+	
 
 }
 
