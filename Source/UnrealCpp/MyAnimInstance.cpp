@@ -40,6 +40,7 @@ void UMyAnimInstance::NativeBeginPlay()
 			CharacterMovement = MyCharacter->GetCharacterMovement();
 		}
 		EnemyOwner = Cast<AEnemy>(Pawn);
+		MyCharacterOwner = Cast<AMyCharacter>(Pawn);
 	}
 
 }
@@ -85,12 +86,11 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 	if (IsValid(EnemyOwner))
 	{
-		HP = EnemyOwner->HP;
-
-		if (HP <= 0 && DeathMontage && !Montage_IsPlaying(DeathMontage))
-		{
-			Montage_Play(DeathMontage);
-		}
+		EnemyHP = EnemyOwner->HP;
+	}
+	if (IsValid(MyCharacterOwner))
+	{
+		MyCharacterHP = MyCharacterOwner->HP;
 	}
 }
 

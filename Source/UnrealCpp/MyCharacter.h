@@ -49,6 +49,7 @@ private:
 	FRotator SocketRotation;
 	UPROPERTY(VisibleAnywhere)
 	bool IsShooting = false;
+public:
 	UPROPERTY(VisibleAnywhere)
 	float HP;
 

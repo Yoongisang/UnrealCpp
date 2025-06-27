@@ -45,7 +45,11 @@ public:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	class AEnemy* EnemyOwner;
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	float HP;
+	class AMyCharacter* MyCharacterOwner;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float EnemyHP;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float MyCharacterHP;
 public:
 	UMyAnimInstance();
 	virtual void NativeInitializeAnimation() override;

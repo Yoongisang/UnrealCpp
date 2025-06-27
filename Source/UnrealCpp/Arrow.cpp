@@ -50,6 +50,7 @@ AArrow::AArrow()
 	CollisionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap); // 캐릭터
 	CollisionBox->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Block); // 상자
 	CollisionBox->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block); // 벽
+	
 
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AArrow::OnOverlapBegin);
 	CollisionBox->OnComponentHit.AddDynamic(this, &AArrow::OnHit);
@@ -101,7 +102,7 @@ void AArrow::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]() {Destroy(); }, 3.f, false);
-
+	
 	UGameplayStatics::ApplyDamage(OtherActor, 10.f, ProjectileMovement->GetOwner()->GetInstigatorController(), nullptr, NULL);
 
 }

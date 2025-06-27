@@ -33,7 +33,7 @@ AMyCharacter::AMyCharacter()
 	CameraBoom->bUsePawnControlRotation = true;
 	CameraBoom->SocketOffset = FVector(0.f, 120.f, 75.f); // ¼öÁ¤
 	
-	HP = 100;
+	HP = 50;
 }
 
 // Called when the game starts or when spawned
@@ -188,12 +188,13 @@ void AMyCharacter::PlayerReload()
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	UE_LOG(LogTemp, Warning, TEXT("[TakeDamage] Damaged: %f from %s"), DamageAmount,
-		*GetNameSafe(DamageCauser));
-
-	UE_LOG(LogTemp, Log, TEXT("Damaged : %f"), DamageAmount);
 	HP -= DamageAmount;
-	return HP;
+	UE_LOG(LogTemp, Log, TEXT("Damaged : %f"), HP);
+	if (HP <= 0)
+	{
+		SetLifeSpan(2.f);
+	}
+	return 0.f;
 }
 
 
