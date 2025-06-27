@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+struct FInputActionValue;
+
+
 UCLASS()
 class UNREALCPP_API AMyCharacter : public ACharacter
 {
@@ -40,7 +43,14 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* FireAction;
 
-
+	UPROPERTY(VisibleAnywhere)
+	FVector SocketLocation;
+	UPROPERTY(VisibleAnywhere)
+	FRotator SocketRotation;
+	UPROPERTY(VisibleAnywhere)
+	bool IsShooting = false;
+	UPROPERTY(VisibleAnywhere)
+	float HP;
 
 public:
 	// Sets default values for this character's properties
@@ -68,5 +78,9 @@ public:
 	void Fire(const FInputActionValue& Value);
 
 	void PlayerAttack();
+	void PlayerReload();
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
 
 };

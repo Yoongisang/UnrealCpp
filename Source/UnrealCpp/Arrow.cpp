@@ -57,7 +57,7 @@ AArrow::AArrow()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->SetUpdatedComponent(RootComponent);
-	ProjectileMovement->InitialSpeed = 5000.f;S
+	ProjectileMovement->InitialSpeed = 5000.f;
 	ProjectileMovement->MaxSpeed = 5000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
 
@@ -99,6 +99,11 @@ void AArrow::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticle, CollisionBox->GetComponentLocation(), FRotator::ZeroRotator, true);
 
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]() {Destroy(); }, 3.f, false);
+
+	UGameplayStatics::ApplyDamage(OtherActor, 10.f, ProjectileMovement->GetOwner()->GetInstigatorController(), nullptr, NULL);
+
 }
 
 void AArrow::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -114,10 +119,15 @@ void AArrow::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveC
 		AttachToComponent(OtherComp, FAttachmentTransformRules::KeepWorldTransform);
 		SetActorRotation(GetActorForwardVector().Rotation());
 	}
-
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticle,Hit.ImpactPoint, FRotator::ZeroRotator, true);
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]() {Destroy(); }, 3.f, false);
+
+	UGameplayStatics::ApplyDamage(OtherActor, 10.f, ProjectileMovement->GetOwner()->GetInstigatorController(), nullptr, NULL);
+
 }
 
 

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "MyAnimInstance.generated.h"
-
 /**
  * 
  */
@@ -27,6 +26,7 @@ private:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float GroundSpeed;
 
+
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float YawOffset;
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
@@ -40,7 +40,12 @@ public:
 	//UPROPERTY(VisibleAnywhere)
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage; // UAnimMontage 포인터
-
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	UAnimMontage* DeathMontage; // UAnimMontage 포인터
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	class AEnemy* EnemyOwner;
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float HP;
 public:
 	UMyAnimInstance();
 	virtual void NativeInitializeAnimation() override;
@@ -49,6 +54,10 @@ public:
 public:
 	void PlayAttackMontage(); 
 public:
+
 	UFUNCTION()
-	void AnimNotify_Hit();
+	void AnimNotify_SaveAttack();
+	UFUNCTION()
+	void AnimNotify_Shoot();
+
 };

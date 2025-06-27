@@ -6,7 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimMontage.h"
 #include "kismet/kismetMathLibrary.h"
-
+#include "Enemy.h"
 
 UMyAnimInstance::UMyAnimInstance()
 {
@@ -16,10 +16,11 @@ UMyAnimInstance::UMyAnimInstance()
 	//{
 	//	AttackMontage = AM.Object;
 	//}
-	if (IsValid(AttackMontage))
-	{
-		Montage_Play(AttackMontage);
-	}
+	//if (IsValid(AttackMontage))
+	//{
+	//	Montage_Play(AttackMontage);
+	//}
+
 }
 
 void UMyAnimInstance::NativeInitializeAnimation()
@@ -38,6 +39,7 @@ void UMyAnimInstance::NativeBeginPlay()
 		{
 			CharacterMovement = MyCharacter->GetCharacterMovement();
 		}
+		EnemyOwner = Cast<AEnemy>(Pawn);
 	}
 
 }
@@ -81,7 +83,15 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	
 
 	}
-	
+	if (IsValid(EnemyOwner))
+	{
+		HP = EnemyOwner->HP;
+
+		if (HP <= 0 && DeathMontage && !Montage_IsPlaying(DeathMontage))
+		{
+			Montage_Play(DeathMontage);
+		}
+	}
 }
 
 void UMyAnimInstance::PlayAttackMontage()
@@ -100,7 +110,15 @@ void UMyAnimInstance::PlayAttackMontage()
 	}
 }
 
-void UMyAnimInstance::AnimNotify_Hit()
+
+void UMyAnimInstance::AnimNotify_SaveAttack()
+{
+	MyCharacter->PlayerReload();
+
+}
+
+void UMyAnimInstance::AnimNotify_Shoot()
 {
 	MyCharacter->PlayerAttack();
+
 }
