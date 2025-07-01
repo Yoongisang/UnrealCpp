@@ -13,5 +13,5 @@ UCLASS()
 class UNREALCPP_API AMyEnemy : public AMyCharacter
 {
 	GENERATED_BODY()
-	
+public:
 };
