@@ -113,8 +113,10 @@ void UMyAnimInstance::PlayAttackMontage()
 
 void UMyAnimInstance::AnimNotify_SaveAttack()
 {
-	MyCharacter->PlayerReload();
-
+	if (MyCharacter && MyCharacter->IsA(AMyCharacter::StaticClass()))
+	{
+		MyCharacter->PlayerReload();
+	}
 }
 
 void UMyAnimInstance::AnimNotify_Shoot()
