@@ -41,7 +41,7 @@ public:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage; // UAnimMontage 포인터
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	UAnimMontage* DeathMontage; // UAnimMontage 포인터
+	TObjectPtr<UAnimMontage> DeathMontage; // UAnimMontage 포인터
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	class AEnemy* EnemyOwner;
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))

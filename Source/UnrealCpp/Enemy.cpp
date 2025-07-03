@@ -2,9 +2,8 @@
 
 
 #include "Enemy.h"
-#include "MyAnimInstance.h"
 #include "AI/EnemyAIController.h"
-#include "Animation/AnimMontage.h"
+#include "AI/EnemyAnimInstance.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -12,8 +11,24 @@ AEnemy::AEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	HP = 50;
-	AIControllerClass = AEnemyAIController::StaticClass();
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 
+	if (SM.Succeeded())
+	{
+
+		GetMesh()->SetSkeletalMesh(SM.Object);
+		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, -90.f, 0.f));
+
+	}
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AI(TEXT("/Script/Engine.AnimBlueprint'/Game/Animation/ABP_Enemy.ABP_Enemy_C'"));
+	if (AI.Succeeded())
+	{
+		GetMesh()->SetAnimClass(AI.Class);
+
+	}
+
+	AIControllerClass = AEnemyAIController::StaticClass();
 
 }
 
@@ -21,11 +36,10 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
-	if (AnimInstance == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Enemy AnimInstance is NULL"));
-	}
+
+	EnemyAnimInstance = Cast<UEnemyAnimInstance>(GetMesh()->GetAnimInstance());
+	EnemyAnimInstance->OnMontageEnded.AddDynamic(this, &AEnemy::OnAttackMontageEnded);
+
 }
 
 // Called every frame
@@ -50,22 +64,31 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		SetLifeSpan(2.f);
 	}
-	return 0.f;
+	return 0.0f;
 }
 
 void AEnemy::EnemyAttack()
 {
 	UE_LOG(LogTemp, Log, TEXT("Attack"));
 
-	if (AnimInstance && AnimInstance->AttackMontage)
+	if (IsValid(EnemyAnimInstance))
 	{
-		AnimInstance->Montage_Play(AnimInstance->AttackMontage);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("AttackMontage is null"));
+		if (!isAttacking)
+		{
+
+			EnemyAnimInstance->PlayAttackMontage();
+			isAttacking = true;
+		}
+
 	}
 	
+
+}
+
+void AEnemy::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	isAttacking = false;
+	UE_LOG(LogTemp, Log, TEXT("OnAttackMontage Ended"));
 
 }
 

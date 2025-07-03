@@ -13,7 +13,10 @@ class UNREALCPP_API AEnemy : public ACharacter
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UMyAnimInstance* AnimInstance;
+	class UEnemyAnimInstance* EnemyAnimInstance;
+
+private:
+	bool isAttacking = false;
 
 public:
 	UPROPERTY(VisibleAnywhere)
@@ -21,6 +24,8 @@ public:
 public:
 	// Sets default values for this character's properties
 	AEnemy();
+public:
+	bool GetIsAttacking() const { return isAttacking; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -35,4 +40,7 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	void EnemyAttack();
+public:
+	UFUNCTION()
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 };

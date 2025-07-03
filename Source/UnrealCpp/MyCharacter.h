@@ -16,10 +16,10 @@ class UNREALCPP_API AMyCharacter : public ACharacter
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UMyAnimInstance* AnimInstance;
+	TObjectPtr <class UMyAnimInstance> AnimInstance;
 
 	UPROPERTY(VisibleAnywhere)
-	class USpringArmComponent* CameraBoom;
+	TObjectPtr <class USpringArmComponent> CameraBoom;
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* FollowCamera;
 
