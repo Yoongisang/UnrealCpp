@@ -13,6 +13,9 @@ UCLASS()
 class UNREALCPP_API UEnemyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+private:
+	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	bool ShouldMove;
 public:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage;
@@ -21,11 +24,10 @@ public:
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	class UCharacterMovementComponent* CharacterMovement;
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	bool ShouldMove = false;
-	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	class AEnemy* EnemyOwner;
+	TObjectPtr <class AEnemy> EnemyOwner;
 	UPROPERTY(Category = "Ani", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UAnimMontage> DeathMontage; // UAnimMontage ∆˜¿Œ≈Õ
+
 public:
 	UEnemyAnimInstance();
 	virtual void NativeInitializeAnimation() override;

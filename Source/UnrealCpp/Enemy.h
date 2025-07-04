@@ -19,7 +19,7 @@ private:
 	bool isAttacking = false;
 
 public:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(Category = "HP", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float HP;
 public:
 	// Sets default values for this character's properties
@@ -38,9 +38,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser);
 	void EnemyAttack();
 public:
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
 };
