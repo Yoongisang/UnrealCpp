@@ -86,7 +86,7 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 	if (IsValid(EnemyOwner))
 	{
-		EnemyHP = EnemyOwner->HP;
+		//EnemyHP = EnemyOwner->HP;
 	}
 	if (IsValid(MyCharacterOwner))
 	{

@@ -4,13 +4,16 @@
 #include "Enemy.h"
 #include "AI/EnemyAIController.h"
 #include "AI/EnemyAnimInstance.h"
+#include "Components/WidgetComponent.h"
+#include "MyUserWidget.h"
+#include "MyActorComponent.h"
 
 // Sets default values
 AEnemy::AEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	HP = 50;
+
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 
 	if (SM.Succeeded())
@@ -30,7 +33,24 @@ AEnemy::AEnemy()
 
 	AIControllerClass = AEnemyAIController::StaticClass();
 
+	MyActorCompoent = CreateDefaultSubobject<UMyActorComponent>(TEXT("MyActorCompoent"));
+
+	HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBarTest"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.f, 0.f, 130.f));
+
+	static ConstructorHelpers::FClassFinder<UMyUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/WBP_HpBar.WBP_HpBar_C'"));
+	if (UW.Succeeded())
+	{
+		HpBar->SetWidgetClass(UW.Class);
+		HpBar->SetWidgetSpace(EWidgetSpace::Screen);
+		HpBar->SetDrawSize(FVector2D(200.f, 20.f));
+	}
+	
 }
+
+
+
 
 // Called when the game starts or when spawned
 void AEnemy::BeginPlay()
@@ -39,7 +59,13 @@ void AEnemy::BeginPlay()
 
 	EnemyAnimInstance = Cast<UEnemyAnimInstance>(GetMesh()->GetAnimInstance());
 	EnemyAnimInstance->OnMontageEnded.AddDynamic(this, &AEnemy::OnAttackMontageEnded);
+	
+	auto HpWidget = Cast<UMyUserWidget>(HpBar->GetUserWidgetObject());
+	if (HpWidget)
+	{
+		HpWidget->BindHp(MyActorCompoent);
 
+	}
 }
 
 // Called every frame
@@ -58,13 +84,13 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	HP -= DamageAmount;
-	UE_LOG(LogTemp, Log, TEXT("Damaged : %f"), HP);
-	if (HP <= 0)
+
+	MyActorCompoent->OnDamaged(DamageAmount);
+	if (MyActorCompoent->Hp <= 0)
 	{
 		SetLifeSpan(2.f);
 	}
-	return 0.0f;
+	return DamageAmount;
 }
 
 void AEnemy::EnemyAttack()

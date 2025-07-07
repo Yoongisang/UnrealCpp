@@ -4,7 +4,7 @@
 #include "EnemyAnimInstance.h"
 #include "UnrealCpp/Enemy.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "UnrealCpp/MyActorComponent.h"
 
 UEnemyAnimInstance::UEnemyAnimInstance()
 {
@@ -53,8 +53,14 @@ void UEnemyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 
 	if (IsValid(EnemyOwner))
-	{
-		EnemyHP = EnemyOwner->HP;
+	{	
+		AActor* Owner = TryGetPawnOwner();
+		UMyActorComponent* Comp = Cast<UMyActorComponent>(Owner->GetComponentByClass(UMyActorComponent::StaticClass()));
+		if (Comp)
+		{
+			EnemyHP = Comp->Hp;
+		}
+		//EnemyHP = EnemyOwner->HP;
 	}
 
 }

@@ -14,13 +14,14 @@ class UNREALCPP_API AEnemy : public ACharacter
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UEnemyAnimInstance* EnemyAnimInstance;
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HpBar;
+	UPROPERTY(VisibleAnywhere)
+	class UMyActorComponent* MyActorCompoent;
 
 private:
 	bool isAttacking = false;
 
-public:
-	UPROPERTY(Category = "HP", EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	float HP;
 public:
 	// Sets default values for this character's properties
 	AEnemy();
