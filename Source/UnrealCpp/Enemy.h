@@ -13,7 +13,7 @@ class UNREALCPP_API AEnemy : public ACharacter
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UEnemyAnimInstance* EnemyAnimInstance;
+	TObjectPtr<class UEnemyAnimInstance> EnemyAnimInstance;
 	UPROPERTY(VisibleAnywhere)
 	class UWidgetComponent* HpBar;
 	UPROPERTY(VisibleAnywhere)
